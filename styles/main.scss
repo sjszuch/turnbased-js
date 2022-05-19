@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+
+$heal-color: #23d5ab;
+$attack-color: #ff5630;
+
+@mixin actionButton($bgc) {
+  border: none;
+  border-radius: 5px;
+  padding: 15px 10px;
+  background-color: $bgc;
+
+  &:hover {
+    cursor: pointer;
+    background-color: darken($color: $bgc, $amount: 5);
+    color: #fff;
+  }
+}
+
+* {
+  font-family: Ubuntu, sans-serif;
+  font-weight: 600;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+
+  color: white;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+}
+
+.view-area {
+  background-color: #000;
+  text-align: center;
+
+  padding: 5rem 0 1rem 0;
+}
+
+.health-view {
+  background-color: rgb(101, 0, 0);
+  padding: 1rem 0;
+  text-align: center;
+  p {
+    color: #f8f8f8;
+    display: inline;
+  }
+}
+
+.play-area {
+  background-color: rgb(23, 25, 70);
+  padding: 1rem;
+  text-align: center;
+}
+
+#punch-button {
+  @include actionButton($attack-color);
+}
+
+#kick-button {
+  @include actionButton($attack-color);
+}
+
+#heal-button {
+  @include actionButton($heal-color);
+}
+
+#defend-button {
+  @include actionButton(rgb(255, 199, 57));
+}
