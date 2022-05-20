@@ -2,6 +2,7 @@
 
 $heal-color: #23d5ab;
 $attack-color: #ff5630;
+$combo-color: #91479f;
 
 @mixin actionButton($bgc) {
   border: none;
@@ -52,7 +53,7 @@ body {
   text-align: center;
 }
 
-#punch-button {
+#skill1-button, #skill2-button, #skill3-button {
   @include actionButton($attack-color);
 }
 

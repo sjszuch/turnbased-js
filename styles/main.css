@@ -34,14 +34,14 @@ body {
   text-align: center;
 }
 
-#punch-button {
+#skill1-button, #skill2-button, #skill3-button {
   border: none;
   border-radius: 5px;
   padding: 15px 10px;
   background-color: #ff5630;
 }
 
-#punch-button:hover {
+#skill1-button:hover, #skill2-button:hover, #skill3-button:hover {
   cursor: pointer;
   background-color: #ff4117;
   color: #fff;

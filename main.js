@@ -12,6 +12,10 @@ var playerStats = {
     strength: 1
 }
 
+var playerEquip = {
+    skills: [0, 1, 3]
+}
+
 // CONSTRUCTORS
 // Constructor function for all attack skills
 function Attack(name, power, combosFrom, comboPower, coolDown) {
@@ -23,25 +27,34 @@ function Attack(name, power, combosFrom, comboPower, coolDown) {
 }
 
 // Enemy constructor
-function Enemy(name, health, attack1, attack2) {
+function Enemy(name, health, attack1, attack2, attackName1, attackName2) {
     this.name = name;
     this.health = health;
     this.enemyAttacks = [
-        this.attack1 = attack1,
-        this.attack2 = attack2
+        this.attack1 = {
+            power: attack1,
+            name: attackName1
+        },
+
+        this.attack2 = {
+            power: attack2,
+            name: attackName2
+        }
     ]
 }
 
 // ARRAYS
 // A list of all attack skills
 var attackList = [
-    punch = new Attack("punch", 10, null, null, 5),
-    kick = new Attack("kick", 20, "punch", 50, 10)
+    punch = new Attack("punch", 10, null, null, 0),
+    kick = new Attack("kick", 20, "punch", 50, 2),
+    slam = new Attack("slam", 50, "kick", 100, 3),
+    swipe = new Attack("swipe", 10, "punch", 200, 1)
 ];
 
 // A list of all enemies
 var enemyList = [
-    froggit = new Enemy("Froggit", 500, 5, 10),
+    froggit = new Enemy("Froggit", 500, 5, 10, "hop", "leap"),
     flowey = new Enemy("Flowey", 100, 2, 5)
 ]
 
@@ -81,13 +94,14 @@ function useAttack(action) {
 
 // Random number generator with max of n
 function rng(n) {
-    return Math.pow(Math.random() * n);
+    return Math.round(Math.random() * n);
 }
 
 // Gameplay / DOM
 
 // This variable stores the name of the last used attack
 var lastAttack;
+var lastEnemyAttack;
 
 // This stores the last amount of damage that the player dealt
 var lastDamage;
@@ -127,8 +141,8 @@ function takeTurn(e) {
             healCooldown = 3;
             lastAttack = "heal";
         } else {
-            lastDamage = useAttack(attackList[e]);
-            enemyHealth -= useAttack(attackList[e]);
+            lastDamage = useAttack(attackList[playerEquip.skills[e]]);
+            enemyHealth -= useAttack(attackList[playerEquip.skills[e]]);
             if (healCooldown > 0) {
                 healCooldown--;
             }
@@ -145,27 +159,32 @@ function takeTurn(e) {
 // Enemy takes turn
 function enemyTurn() {
     document.querySelector("#enemy-sprite").style.filter = "brightness(1)";
+    nextAttack = rng(enemyList[0].enemyAttacks.length - 1);
 
     if (defending) {
-        playerHealth -= enemyList[0].enemyAttacks[1] / 2;
-        damageTaken = enemyList[0].enemyAttacks[1] / 2;
+        playerHealth -= enemyList[0].enemyAttacks[nextAttack].power / 2;
+        damageTaken = enemyList[0].enemyAttacks[nextAttack].power / 2;
     } else {
-        playerHealth -= enemyList[0].enemyAttacks[1];
-        damageTaken = enemyList[0].enemyAttacks[1];
+        playerHealth -= enemyList[0].enemyAttacks[nextAttack].power;
+        damageTaken = enemyList[0].enemyAttacks[nextAttack].power;
     }
 
+    lastEnemyAttack = enemyList[0].enemyAttacks[nextAttack].name;
     turnNumber++;
     update();
     defending = false;
     playerTurn = true;
 }
 
+var skill1Button = document.querySelector("#skill1-button");
+var skill2Button = document.querySelector("#skill2-button");
+var skill3Button = document.querySelector("#skill3-button");
+
 // Update function to display the healths
 function update(lastTurn) {
 
     statusUpdate = document.querySelector("#status");
     healButton = document.querySelector("#heal-button");
-    kickButton = document.querySelector("#kick-button");
 
     document.querySelector("#player-health").innerHTML = playerHealth;
     document.querySelector("#enemy-health").innerHTML = enemyHealth;
@@ -188,15 +207,25 @@ function update(lastTurn) {
                 break;
         }
     } else
-        statusUpdate.innerHTML = "Enemy attacks for " + damageTaken;
+        statusUpdate.innerHTML = "Enemy attacks with " + lastEnemyAttack + " for " + damageTaken;
 
-
-    if (lastAttack === "punch") {
-        kickButton.style.filter = "hue-rotate(250deg)";
-    } else {
-        kickButton.style.filter = "hue-rotate(0)";
+    if (turnNumber === 0 && playerTurn) {
+        statusUpdate.innerHTML = "A wild " + enemyList[0].name + " approaches!";
     }
 
+    var skillButtons = [skill1Button, skill2Button, skill3Button];
+
+    for(i=0; i<playerEquip.skills.length; i++) {
+        if(attackList[playerEquip.skills[i]].combosFrom === lastAttack) {
+            skillButtons[i].style.filter = "hue-rotate(250deg)";
+        }
+        else
+        skillButtons[i].style.filter = "hue-rotate(0)";
+    }
 }
+
+skill1Button.innerHTML = attackList[playerEquip.skills[0]].name;
+skill2Button.innerHTML = attackList[playerEquip.skills[1]].name;
+skill3Button.innerHTML = attackList[playerEquip.skills[2]].name;
 
 update();
