@@ -13,7 +13,7 @@ var playerStats = {
 }
 
 var playerEquip = {
-    skills: [0, 1, 3]
+    skills: [0, 1, 2]
 }
 
 // CONSTRUCTORS
@@ -27,7 +27,7 @@ function Attack(name, power, combosFrom, comboPower, coolDown) {
 }
 
 // Enemy constructor
-function Enemy(name, health, attack1, attack2, attackName1, attackName2) {
+function Enemy(name, health, attack1, attack2, attackName1, attackName2, enemyImage) {
     this.name = name;
     this.health = health;
     this.enemyAttacks = [
@@ -40,7 +40,8 @@ function Enemy(name, health, attack1, attack2, attackName1, attackName2) {
             power: attack2,
             name: attackName2
         }
-    ]
+    ],
+    this.enemyImage = enemyImage;
 }
 
 // ARRAYS
@@ -54,8 +55,8 @@ var attackList = [
 
 // A list of all enemies
 var enemyList = [
-    froggit = new Enemy("Froggit", 500, 5, 10, "hop", "leap"),
-    flowey = new Enemy("Flowey", 100, 2, 5)
+    froggit = new Enemy("Froggit", 500, 5, 10, "hop", "leap", "sprites/froggit.webp"),
+    flowey = new Enemy("Flowey", 100, 2, 5, "first attack", "second attack", "sprites/flowey.webp")
 ]
 
 // Used any time player attacks, scales the damage by the player's stats
@@ -103,6 +104,9 @@ function rng(n) {
 var lastAttack;
 var lastEnemyAttack;
 
+// Which enemy is being fought
+var enemyNumber = 1;
+
 // This stores the last amount of damage that the player dealt
 var lastDamage;
 
@@ -114,7 +118,7 @@ var defending = false;
 var playerHealth = playerStats.maxHealth;
 
 // Sets enemy health to the health of the element on enemyList
-var enemyHealth = enemyList[0].health;
+var enemyHealth = enemyList[enemyNumber].health;
 
 // Stores the last amount of damage taken by the player
 var damageTaken = 0;
@@ -159,17 +163,17 @@ function takeTurn(e) {
 // Enemy takes turn
 function enemyTurn() {
     document.querySelector("#enemy-sprite").style.filter = "brightness(1)";
-    nextAttack = rng(enemyList[0].enemyAttacks.length - 1);
+    nextAttack = rng(enemyList[enemyNumber].enemyAttacks.length - 1);
 
     if (defending) {
-        playerHealth -= enemyList[0].enemyAttacks[nextAttack].power / 2;
-        damageTaken = enemyList[0].enemyAttacks[nextAttack].power / 2;
+        playerHealth -= enemyList[enemyNumber].enemyAttacks[nextAttack].power / 2;
+        damageTaken = enemyList[enemyNumber].enemyAttacks[nextAttack].power / 2;
     } else {
-        playerHealth -= enemyList[0].enemyAttacks[nextAttack].power;
-        damageTaken = enemyList[0].enemyAttacks[nextAttack].power;
+        playerHealth -= enemyList[enemyNumber].enemyAttacks[nextAttack].power;
+        damageTaken = enemyList[enemyNumber].enemyAttacks[nextAttack].power;
     }
 
-    lastEnemyAttack = enemyList[0].enemyAttacks[nextAttack].name;
+    lastEnemyAttack = enemyList[enemyNumber].enemyAttacks[nextAttack].name;
     turnNumber++;
     update();
     defending = false;
@@ -179,6 +183,7 @@ function enemyTurn() {
 var skill1Button = document.querySelector("#skill1-button");
 var skill2Button = document.querySelector("#skill2-button");
 var skill3Button = document.querySelector("#skill3-button");
+document.querySelector("#enemy-sprite").src = enemyList[enemyNumber].enemyImage;
 
 // Update function to display the healths
 function update(lastTurn) {
@@ -210,7 +215,7 @@ function update(lastTurn) {
         statusUpdate.innerHTML = "Enemy attacks with " + lastEnemyAttack + " for " + damageTaken;
 
     if (turnNumber === 0 && playerTurn) {
-        statusUpdate.innerHTML = "A wild " + enemyList[0].name + " approaches!";
+        statusUpdate.innerHTML = "A wild " + enemyList[enemyNumber].name + " approaches!";
     }
 
     var skillButtons = [skill1Button, skill2Button, skill3Button];
