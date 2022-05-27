@@ -1,36 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
     <link rel="stylesheet" href="styles/main.css" />
-    <title>JavaScript RPG</title>
-</head>
+  </head>
+  <body>
+    <header>
+      <button id="sound-button" onclick="soundSwitch()">Unmute</button>
+    </header>
 
-<body>
-    <div class="view-area">
-        <img id="enemy-sprite" alt="">
-        <p id="status">Update</p>
-    </div>
-
-    <div class="health-view">
-        <p>Player:</p>
-        <p id="player-health">player</p>
-        <p>Enemy:</p>
-        <p id="enemy-health">enemy</p>
-    </div>
-
-    <div class="play-area">
-        <button id="skill1-button" onclick="takeTurn(0)">Punch</button>
-        <button id="skill2-button" onclick="takeTurn(1)">Kick</button>
-        <button id="skill3-button" onclick="takeTurn(2)"></button>
-        <button id="heal-button" onclick="takeTurn('heal')">Heal</button>
-        <button id="defend-button" onclick="takeTurn('defend')">Defend</button>
-    </div>
+    <section class="level-select">
+      <a href="gameplay.html"
+        ><button onclick="enemySelect(0)">Lvl 1</button></a
+      >
+      <a href="gameplay.html"
+        ><button onclick="enemySelect(1)">Lvl 2</button></a
+      >
+    </section>
 
     <script src="main.js"></script>
-</body>
-
+  </body>
 </html>

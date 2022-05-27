@@ -1,3 +1,27 @@
+// Music
+var startMenuMusic = new Audio('music/start-menu.mp3');
+var battleTheme0 = new Audio('music/enemy-approaching.mp3');
+
+// Sound Effects
+var hitSound = new Audio('sounds/snd_damage.wav');
+var hurtSound = new Audio('sounds/snd_break1.wav');
+
+// LEVEL SELECT SCREEN
+var soundOn = false;
+
+function soundSwitch() {
+    if (soundOn) {
+        document.querySelector("#sound-button").innerHTML = "Unmute";
+        startMenuMusic.pause();
+        soundOn = false;
+    }
+    else {
+        document.querySelector("#sound-button").innerHTML = "Mute";
+        startMenuMusic.play();
+        soundOn = true;
+    }
+}
+
 var playerStats = {
     // Maximum health
     maxHealth: 100,
@@ -105,7 +129,21 @@ var lastAttack;
 var lastEnemyAttack;
 
 // Which enemy is being fought
-var enemyNumber = 1;
+function enemySelect(e) {
+    sessionStorage.setItem("fightNumber", e);
+}
+
+var enemyNumber = sessionStorage.getItem("fightNumber");
+
+// if sound is on
+switch (enemyNumber) {
+    case "0":
+        battleTheme0.play();
+        break;
+    default:
+        startMenuMusic.play();
+        break;
+}
 
 // This stores the last amount of damage that the player dealt
 var lastDamage;
@@ -128,7 +166,7 @@ var turnNumber = 0;
 
 var healCooldown = 0;
 
-// When you press an attack or shield button, attack the monster or defend
+// When the player takes their turn
 function takeTurn(e) {
     if (playerTurn) {
         // If the player chose to defend
@@ -150,6 +188,7 @@ function takeTurn(e) {
             if (healCooldown > 0) {
                 healCooldown--;
             }
+            hitSound.play();
             document.querySelector("#enemy-sprite").style.filter = "brightness(.5)";
         }
 
@@ -164,6 +203,7 @@ function takeTurn(e) {
 function enemyTurn() {
     document.querySelector("#enemy-sprite").style.filter = "brightness(1)";
     nextAttack = rng(enemyList[enemyNumber].enemyAttacks.length - 1);
+    hurtSound.play();
 
     if (defending) {
         playerHealth -= enemyList[enemyNumber].enemyAttacks[nextAttack].power / 2;
