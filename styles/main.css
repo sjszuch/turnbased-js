@@ -1,88 +1,33 @@
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Ubuntu&display=swap");
 * {
-  font-family: Ubuntu, sans-serif;
+  font-family: 'Press Start 2P', sans-serif;
   font-weight: 600;
 }
 
 body {
   padding: 0;
   margin: 0;
-  color: white;
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-}
-
-.view-area {
   background-color: #000;
-  text-align: center;
-  padding: 5rem 0 1rem 0;
 }
 
-.health-view {
-  background-color: #650000;
-  padding: 1rem 0;
-  text-align: center;
-}
-
-.health-view p {
-  color: #f8f8f8;
-  display: inline;
-}
-
-.play-area {
-  background-color: #171946;
+button {
+  background-color: transparent;
+  color: orange;
+  border: orange 2px solid;
   padding: 1rem;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: #382400;
+}
+
+.hero-section {
+  color: white;
   text-align: center;
 }
 
-#skill1-button, #skill2-button, #skill3-button {
-  border: none;
-  border-radius: 5px;
-  padding: 15px 10px;
-  background-color: #ff5630;
-}
-
-#skill1-button:hover, #skill2-button:hover, #skill3-button:hover {
-  cursor: pointer;
-  background-color: #ff4117;
-  color: #fff;
-}
-
-#kick-button {
-  border: none;
-  border-radius: 5px;
-  padding: 15px 10px;
-  background-color: #ff5630;
-}
-
-#kick-button:hover {
-  cursor: pointer;
-  background-color: #ff4117;
-  color: #fff;
-}
-
-#heal-button {
-  border: none;
-  border-radius: 5px;
-  padding: 15px 10px;
-  background-color: #23d5ab;
-}
-
-#heal-button:hover {
-  cursor: pointer;
-  background-color: #1fbf99;
-  color: #fff;
-}
-
-#defend-button {
-  border: none;
-  border-radius: 5px;
-  padding: 15px 10px;
-  background-color: #ffc739;
-}
-
-#defend-button:hover {
-  cursor: pointer;
-  background-color: #ffc020;
-  color: #fff;
+.level-select {
+  text-align: center;
 }
 /*# sourceMappingURL=main.css.map */

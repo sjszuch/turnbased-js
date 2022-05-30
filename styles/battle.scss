@@ -1,0 +1,67 @@
+@import "__globals.scss", "__variables.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  color: #fff;
+}
+
+body {
+  background-color: #191919;
+}
+
+@mixin actionButton($bgc) {
+  border: orange 2px solid;
+  padding: 15px 10px;
+  background-color: $bgc;
+  margin: 5px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: darken($color: $bgc, $amount: 5);
+  }
+}
+
+.view-area {
+  text-align: center;
+  padding: 5rem 0 1rem 0;
+  background-color: #000;
+
+  img {
+    margin-bottom: 25px;
+  }
+}
+
+.health-view {
+  background-color: #414141;
+  padding: 1rem 0;
+  text-align: center;
+  p {
+    display: inline;
+  }
+}
+
+.play-area {
+  position: relative;
+  bottom: 0;
+  padding: 1rem;
+  text-align: center;
+}
+
+#skill1-button,
+#skill2-button,
+#skill3-button {
+  @include actionButton($attack-color);
+}
+
+#kick-button {
+  @include actionButton($attack-color);
+}
+
+#heal-button {
+  @include actionButton($heal-color);
+}
+
+#defend-button {
+  @include actionButton(rgb(255, 199, 57));
+}

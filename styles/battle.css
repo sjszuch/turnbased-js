@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Ubuntu&display=swap");
+* {
+  font-family: 'Press Start 2P', sans-serif;
+  font-weight: 600;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  color: #fff;
+}
+
+body {
+  background-color: #191919;
+}
+
+.view-area {
+  text-align: center;
+  padding: 5rem 0 1rem 0;
+  background-color: #000;
+}
+
+.view-area img {
+  margin-bottom: 25px;
+}
+
+.health-view {
+  background-color: #414141;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.health-view p {
+  display: inline;
+}
+
+.play-area {
+  position: relative;
+  bottom: 0;
+  padding: 1rem;
+  text-align: center;
+}
+
+#skill1-button,
+#skill2-button,
+#skill3-button {
+  border: orange 2px solid;
+  padding: 15px 10px;
+  background-color: #ff5630;
+  margin: 5px;
+}
+
+#skill1-button:hover,
+#skill2-button:hover,
+#skill3-button:hover {
+  cursor: pointer;
+  background-color: #ff4117;
+}
+
+#kick-button {
+  border: orange 2px solid;
+  padding: 15px 10px;
+  background-color: #ff5630;
+  margin: 5px;
+}
+
+#kick-button:hover {
+  cursor: pointer;
+  background-color: #ff4117;
+}
+
+#heal-button {
+  border: orange 2px solid;
+  padding: 15px 10px;
+  background-color: #23d5ab;
+  margin: 5px;
+}
+
+#heal-button:hover {
+  cursor: pointer;
+  background-color: #1fbf99;
+}
+
+#defend-button {
+  border: orange 2px solid;
+  padding: 15px 10px;
+  background-color: #ffc739;
+  margin: 5px;
+}
+
+#defend-button:hover {
+  cursor: pointer;
+  background-color: #ffc020;
+}
+/*# sourceMappingURL=battle.css.map */
