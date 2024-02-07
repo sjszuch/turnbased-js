@@ -80,7 +80,7 @@ var attackList = [
 // A list of all enemies
 var enemyList = [
     froggit = new Enemy("Froggit", 500, 5, 10, "hop", "leap", "sprites/froggit.webp"),
-    flowey = new Enemy("Flowey", 100, 2, 5, "first attack", "second attack", "sprites/flowey.webp")
+    flowey = new Enemy("Flowey", 100, 2, 5, "poison", "seed spit", "sprites/flowey.webp")
 ]
 
 // Used any time player attacks, scales the damage by the player's stats
@@ -104,12 +104,15 @@ function strengthScale(initAttack) {
     }
 }
 
+var comboWorked = false;
+
 // Checks if the attack can be combo'd and logs the attack power, then sets last attack to the one just used
 function useAttack(action) {
     var attackPower;
 
     if (lastAttack === action.combosFrom) {
         attackPower = strengthScale(action.comboPower);
+        comboWorked = true;
     } else
         attackPower = strengthScale(action.power);
 
@@ -248,7 +251,14 @@ function update(lastTurn) {
                 statusUpdate.innerHTML = "Player heals";
                 break;
             default:
-                statusUpdate.innerHTML = "Player uses " + lastAttack + " for " + lastDamage;
+                if (comboWorked) {
+                    statusUpdate.innerHTML = "Player combos " + lastAttack + " for " + lastDamage;
+                    comboWorked = false;
+                } else
+                {
+                    statusUpdate.innerHTML = "Player uses " + lastAttack + " for " + lastDamage;
+                }
+                
                 break;
         }
     } else
